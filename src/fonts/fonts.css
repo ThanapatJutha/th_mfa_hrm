@@ -1,0 +1,77 @@
+/* ============================================================
+ * Font faces — drop .woff2 / .ttf files into the corresponding
+ * folders, then update the src paths below.
+ *
+ * Folders:
+ *   src/fonts/kanit/        — Kanit (headings)
+ *   src/fonts/cs-chatthai/  — CS ChatThai (body)
+ *
+ * After adding files, import this CSS in main.tsx:
+ *   import "./fonts/fonts.css";
+ * ============================================================ */
+
+/* ── Kanit ── */
+@font-face {
+  font-family: "Kanit";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("./kanit/Kanit-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kanit";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("./kanit/Kanit-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kanit";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("./kanit/Kanit-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kanit";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("./kanit/Kanit-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kanit";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("./kanit/Kanit-Bold.ttf") format("truetype");
+}
+
+/* ── CS ChatThai ── */
+@font-face {
+  font-family: "CS ChatThai";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("./cs-chatthai/CSChatThai-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "CS ChatThai";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("./cs-chatthai/CSChatThai.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "CS ChatThai";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("./cs-chatthai/CSChatThai-Bold.otf") format("opentype");
+}

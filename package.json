@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "copy-design-assets": "bash scripts/copy-design-assets.sh",
+    "generate-theme": "node scripts/generate-theme.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

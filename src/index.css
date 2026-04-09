@@ -1,68 +1,278 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+ * Theme generated from figma/tokens/tokens.json
+ * Run: node scripts/generate-theme.mjs
+ * DO NOT EDIT — re-run the script to regenerate.
+ * ============================================================ */
+
+@theme inline {
+    --font-heading: "Kanit", sans-serif;
+    --font-body: "CS ChatThai", sans-serif;
+    --font-sans: "CS ChatThai", sans-serif;
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-destructive-subtle: var(--destructive-subtle);
+    --color-link: var(--link);
+    --color-disabled: var(--disabled);
+    --color-disabled-foreground: var(--disabled-foreground);
+    --color-border: var(--border);
+    --color-border-destructive: var(--border-destructive);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-primary-hovered: var(--primary-hovered);
+    --color-primary-pressed: var(--primary-pressed);
+    --color-secondary-hovered: var(--secondary-hovered);
+    --color-secondary-pressed: var(--secondary-pressed);
+    --color-destructive-hovered: var(--destructive-hovered);
+    --color-destructive-pressed: var(--destructive-pressed);
+    --color-destructive-subtle-hovered: var(--destructive-subtle-hovered);
+    --color-destructive-subtle-pressed: var(--destructive-subtle-pressed);
+    --color-link-hovered: var(--link-hovered);
+    --color-link-pressed: var(--link-pressed);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-info: var(--info);
+    --color-info-foreground: var(--info-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    --background: #ffffff;
+    --foreground: #242526;
+    --card: #ffffff;
+    --card-foreground: #242526;
+    --popover: #ffffff;
+    --popover-foreground: #242526;
+    --primary: #0a5fa4;
+    --primary-foreground: #ffffff;
+    --secondary: #f5f6f7;
+    --secondary-foreground: #242526;
+    --muted: #f5f6f7;
+    --muted-foreground: #525456;
+    --accent: #cedfed;
+    --accent-foreground: #242526;
+    --destructive: #e6504c;
+    --destructive-foreground: #ffffff;
+    --destructive-subtle: #fadcdb;
+    --link: #0492c2;
+    --disabled: #ebedef;
+    --disabled-foreground: #bec0c5;
+    --border: #ced1d6;
+    --border-destructive: #e6504c;
+    --input: #a5a7ab;
+    --ring: #0a5fa4;
+    --radius: 0.625rem;
+    --primary-hovered: #3b7fb6;
+    --primary-pressed: #6c9fc8;
+    --secondary-hovered: #ebedef;
+    --secondary-pressed: #e2e3e6;
+    --destructive-hovered: #eb7370;
+    --destructive-pressed: #f09694;
+    --destructive-subtle-hovered: #f5b9b7;
+    --destructive-subtle-pressed: #f09694;
+    --link-hovered: #36a8ce;
+    --link-pressed: #68beda;
+    --success: #00a587;
+    --success-foreground: #ffffff;
+    --warning: #eca500;
+    --warning-foreground: #ffffff;
+    --info: #928aff;
+    --info-foreground: #ffffff;
+    --sidebar: #ffffff;
+    --sidebar-foreground: #242526;
+    --sidebar-primary: #0a5fa4;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #cedfed;
+    --sidebar-accent-foreground: #242526;
+    --sidebar-border: #ced1d6;
+    --sidebar-ring: #0a5fa4;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+/* .dark { } — no dark mode tokens defined in Figma yet */
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-  a:hover {
-    color: #747bff;
+  body {
+    @apply bg-background text-foreground font-body;
   }
-  button {
-    background-color: #f9f9f9;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+/* ============================================================
+ * Text Style Utilities — generated from Figma text styles
+ * Usage: <h1 className="text-heading-1">...</h1>
+ * ============================================================ */
+
+@layer utilities {
+  .text-heading-1 {
+    font-family: var(--font-heading);
+    font-size: 48px;
+    line-height: 72px;
+    font-weight: 600;
+  }
+  .text-heading-2 {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    line-height: 58px;
+    font-weight: 600;
+  }
+  .text-heading-3 {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 54px;
+    font-weight: 600;
+  }
+  .text-heading-4 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    line-height: 48px;
+    font-weight: 600;
+  }
+  .text-heading-5 {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    line-height: 42px;
+    font-weight: 600;
+  }
+  .text-heading-6 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 600;
+  }
+  .text-subheading-1 {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    line-height: 58px;
+    font-weight: 500;
+  }
+  .text-subheading-2 {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 54px;
+    font-weight: 500;
+  }
+  .text-subheading-3 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    line-height: 48px;
+    font-weight: 500;
+  }
+  .text-subheading-4 {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    line-height: 42px;
+    font-weight: 400;
+  }
+  .text-subheading-5 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 400;
+  }
+  .text-body-title {
+    font-family: var(--font-body);
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 700;
+  }
+  .text-body-accent-1 {
+    font-family: var(--font-body);
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 700;
+  }
+  .text-body-1 {
+    font-family: var(--font-body);
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 400;
+  }
+  .text-body-accent-2 {
+    font-family: var(--font-body);
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 700;
+  }
+  .text-body-2 {
+    font-family: var(--font-body);
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 400;
+  }
+  .text-body-accent-3 {
+    font-family: var(--font-body);
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+  .text-body-3 {
+    font-family: var(--font-body);
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+  .text-body-caption-accent {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+  }
+  .text-body-caption {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  .text-body-disclaimer-accent {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+  }
+  .text-body-disclaimer {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
   }
 }
