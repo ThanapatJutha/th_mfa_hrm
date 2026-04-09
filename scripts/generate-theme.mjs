@@ -23,11 +23,11 @@ const ROOT = resolve(__dirname, "..");
 const tokensPath = resolve(ROOT, "figma/tokens/tokens.json");
 let tokens;
 try {
-  tokens = JSON.parse(readFileSync(tokensPath, "utf-8"));
+    tokens = JSON.parse(readFileSync(tokensPath, "utf-8"));
 } catch (err) {
-  console.error(`❌ Cannot read ${tokensPath}`);
-  console.error("   Run ./scripts/copy-design-assets.sh first to copy tokens from th_mfa_dl.");
-  process.exit(1);
+    console.error(`❌ Cannot read ${tokensPath}`);
+    console.error("   Run ./scripts/copy-design-assets.sh first to copy tokens from th_mfa_dl.");
+    process.exit(1);
 }
 
 // ---------------------------------------------------------------------------
@@ -36,14 +36,14 @@ try {
 
 /** Look up a semantic color token value by path */
 function sem(path) {
-  const col = tokens.collections["02 Color - Semantic Token"]?.variables?.[path];
-  return col?.values?.default ?? null;
+    const col = tokens.collections["02 Color - Semantic Token"]?.variables?.[path];
+    return col?.values?.default ?? null;
 }
 
 /** Look up a primitive color token value */
 function prim(path) {
-  const col = tokens.collections["01 Color - Primitive Token"]?.variables?.[path];
-  return col?.values?.default ?? null;
+    const col = tokens.collections["01 Color - Primitive Token"]?.variables?.[path];
+    return col?.values?.default ?? null;
 }
 
 // ---------------------------------------------------------------------------
@@ -51,80 +51,80 @@ function prim(path) {
 // ---------------------------------------------------------------------------
 
 const colorMap = {
-  // Core surfaces
-  background: sem("surface/primary/default"),
-  foreground: sem("text/primary"),
-  card: sem("surface/primary/default"),
-  "card-foreground": sem("text/primary"),
-  popover: sem("surface/primary/default"),
-  "popover-foreground": sem("text/primary"),
+    // Core surfaces
+    background: sem("surface/primary/default"),
+    foreground: sem("text/primary"),
+    card: sem("surface/primary/default"),
+    "card-foreground": sem("text/primary"),
+    popover: sem("surface/primary/default"),
+    "popover-foreground": sem("text/primary"),
 
-  // Primary = MFA accent blue
-  primary: sem("surface/accent/default"),
-  "primary-foreground": sem("text/inverse"),
+    // Primary = MFA accent blue
+    primary: sem("surface/accent/default"),
+    "primary-foreground": sem("text/inverse"),
 
-  // Secondary
-  secondary: sem("surface/secondary/default"),
-  "secondary-foreground": sem("text/primary"),
+    // Secondary
+    secondary: sem("surface/secondary/default"),
+    "secondary-foreground": sem("text/primary"),
 
-  // Muted
-  muted: sem("surface/secondary/default"),
-  "muted-foreground": sem("text/secondary"),
+    // Muted
+    muted: sem("surface/secondary/default"),
+    "muted-foreground": sem("text/secondary"),
 
-  // Accent (hover/selected states)
-  accent: sem("surface/selected/default"),
-  "accent-foreground": sem("text/primary"),
+    // Accent (hover/selected states)
+    accent: sem("surface/selected/default"),
+    "accent-foreground": sem("text/primary"),
 
-  // Destructive
-  destructive: sem("surface/status/error/default"),
-  "destructive-foreground": sem("text/inverse"),
-  "destructive-subtle": sem("surface/status/error/subtle/default"),
+    // Destructive
+    destructive: sem("surface/status/error/default"),
+    "destructive-foreground": sem("text/inverse"),
+    "destructive-subtle": sem("surface/status/error/subtle/default"),
 
-  // Link
-  link: sem("text/link/default"),
+    // Link
+    link: sem("text/link/default"),
 
-  // Disabled
-  disabled: sem("surface/disabled"),
-  "disabled-foreground": sem("text/disabled"),
+    // Disabled
+    disabled: sem("surface/disabled"),
+    "disabled-foreground": sem("text/disabled"),
 
-  // Borders
-  border: sem("border/secondary"),
-  "border-destructive": sem("border/status/error"),
-  input: sem("border/primary"),
-  ring: prim("primary/blue/main"),
+    // Borders
+    border: sem("border/secondary"),
+    "border-destructive": sem("border/status/error"),
+    input: sem("border/primary"),
+    ring: prim("primary/blue/main"),
 
-  // Radius
-  radius: "0.625rem",
+    // Radius
+    radius: "0.625rem",
 
-  // Interactive state tokens
-  "primary-hovered": sem("surface/accent/hovered"),
-  "primary-pressed": sem("surface/accent/pressed"),
-  "secondary-hovered": sem("surface/secondary/hovered"),
-  "secondary-pressed": sem("surface/secondary/pressed"),
-  "destructive-hovered": sem("surface/status/error/hovered"),
-  "destructive-pressed": sem("surface/status/error/pressed"),
-  "destructive-subtle-hovered": sem("surface/status/error/subtle/hovered"),
-  "destructive-subtle-pressed": sem("surface/status/error/subtle/pressed"),
-  "link-hovered": sem("text/link/hovered"),
-  "link-pressed": sem("text/link/pressed"),
+    // Interactive state tokens
+    "primary-hovered": sem("surface/accent/hovered"),
+    "primary-pressed": sem("surface/accent/pressed"),
+    "secondary-hovered": sem("surface/secondary/hovered"),
+    "secondary-pressed": sem("surface/secondary/pressed"),
+    "destructive-hovered": sem("surface/status/error/hovered"),
+    "destructive-pressed": sem("surface/status/error/pressed"),
+    "destructive-subtle-hovered": sem("surface/status/error/subtle/hovered"),
+    "destructive-subtle-pressed": sem("surface/status/error/subtle/pressed"),
+    "link-hovered": sem("text/link/hovered"),
+    "link-pressed": sem("text/link/pressed"),
 
-  // MFA extensions
-  success: sem("surface/status/success/default"),
-  "success-foreground": "#ffffff",
-  warning: sem("surface/status/warning/default"),
-  "warning-foreground": "#ffffff",
-  info: sem("surface/status/info/lavender-default"),
-  "info-foreground": "#ffffff",
+    // MFA extensions
+    success: sem("surface/status/success/default"),
+    "success-foreground": "#ffffff",
+    warning: sem("surface/status/warning/default"),
+    "warning-foreground": "#ffffff",
+    info: sem("surface/status/info/lavender-default"),
+    "info-foreground": "#ffffff",
 
-  // Sidebar
-  sidebar: sem("surface/primary/default"),
-  "sidebar-foreground": sem("text/primary"),
-  "sidebar-primary": sem("surface/accent/default"),
-  "sidebar-primary-foreground": sem("text/inverse"),
-  "sidebar-accent": sem("surface/selected/default"),
-  "sidebar-accent-foreground": sem("text/primary"),
-  "sidebar-border": sem("border/secondary"),
-  "sidebar-ring": prim("primary/blue/main"),
+    // Sidebar
+    sidebar: sem("surface/primary/default"),
+    "sidebar-foreground": sem("text/primary"),
+    "sidebar-primary": sem("surface/accent/default"),
+    "sidebar-primary-foreground": sem("text/inverse"),
+    "sidebar-accent": sem("surface/selected/default"),
+    "sidebar-accent-foreground": sem("text/primary"),
+    "sidebar-border": sem("border/secondary"),
+    "sidebar-ring": prim("primary/blue/main"),
 };
 
 // ---------------------------------------------------------------------------
@@ -134,18 +134,18 @@ const colorMap = {
 const textStyles = tokens.textStyles || {};
 const fontFamilies = new Set();
 for (const style of Object.values(textStyles)) {
-  if (style.fontFamily) fontFamilies.add(style.fontFamily);
+    if (style.fontFamily) fontFamilies.add(style.fontFamily);
 }
 
 const weightMap = {
-  Thin: "100",
-  Light: "300",
-  Regular: "400",
-  Medium: "500",
-  SemiBold: "600",
-  Bold: "700",
-  ExtraBold: "800",
-  Black: "900",
+    Thin: "100",
+    Light: "300",
+    Regular: "400",
+    Medium: "500",
+    SemiBold: "600",
+    Bold: "700",
+    ExtraBold: "800",
+    Black: "900",
 };
 
 // ---------------------------------------------------------------------------
@@ -172,8 +172,8 @@ let css = `@import "tailwindcss";
 
 // Register all color tokens as --color-* in @theme inline
 for (const key of Object.keys(colorMap)) {
-  if (key === "radius") continue;
-  css += `    --color-${key}: var(--${key});\n`;
+    if (key === "radius") continue;
+    css += `    --color-${key}: var(--${key});\n`;
 }
 
 // Radius scale (shadcn convention)
@@ -191,11 +191,11 @@ css += `}\n\n`;
 // :root with resolved values
 css += `:root {\n`;
 for (const [key, val] of Object.entries(colorMap)) {
-  if (val == null) {
-    css += `    /* --${key}: TODO — no matching token */\n`;
-  } else {
-    css += `    --${key}: ${val};\n`;
-  }
+    if (val == null) {
+        css += `    /* --${key}: TODO — no matching token */\n`;
+    } else {
+        css += `    --${key}: ${val};\n`;
+    }
 }
 css += `}\n\n`;
 
@@ -223,31 +223,31 @@ css += `/* ============================================================
 css += `@layer utilities {\n`;
 
 for (const [name, style] of Object.entries(textStyles)) {
-  const className = name
-    .replace(/\//g, "-")
-    .replace(/\s+/g, "-")
-    .toLowerCase()
-    .replace(/^(\w+)-\1/, "$1");
+    const className = name
+        .replace(/\//g, "-")
+        .replace(/\s+/g, "-")
+        .toLowerCase()
+        .replace(/^(\w+)-\1/, "$1");
 
-  const weight = weightMap[style.fontWeight] || "400";
-  const family =
-    style.fontFamily === "Kanit"
-      ? "var(--font-heading)"
-      : "var(--font-body)";
+    const weight = weightMap[style.fontWeight] || "400";
+    const family =
+        style.fontFamily === "Kanit"
+            ? "var(--font-heading)"
+            : "var(--font-body)";
 
-  css += `  .text-${className} {\n`;
-  css += `    font-family: ${family};\n`;
-  css += `    font-size: ${style.fontSize}px;\n`;
-  css += `    line-height: ${style.lineHeight}px;\n`;
-  css += `    font-weight: ${weight};\n`;
-  if (style.letterSpacing && style.letterSpacing !== 0 && style.letterSpacing !== "0%") {
-    const ls =
-      typeof style.letterSpacing === "number"
-        ? `${style.letterSpacing}px`
-        : style.letterSpacing;
-    css += `    letter-spacing: ${ls};\n`;
-  }
-  css += `  }\n`;
+    css += `  .text-${className} {\n`;
+    css += `    font-family: ${family};\n`;
+    css += `    font-size: ${style.fontSize}px;\n`;
+    css += `    line-height: ${style.lineHeight}px;\n`;
+    css += `    font-weight: ${weight};\n`;
+    if (style.letterSpacing && style.letterSpacing !== 0 && style.letterSpacing !== "0%") {
+        const ls =
+            typeof style.letterSpacing === "number"
+                ? `${style.letterSpacing}px`
+                : style.letterSpacing;
+        css += `    letter-spacing: ${ls};\n`;
+    }
+    css += `  }\n`;
 }
 
 css += `}\n`;
