@@ -3,11 +3,11 @@
  * folders, then update the src paths below.
  *
  * Folders:
- *   src/fonts/kanit/        — Kanit (headings)
- *   src/fonts/cs-chatthai/  — CS ChatThai (body)
+ *   figma/fonts/kanit/        — Kanit (headings)
+ *   figma/fonts/cs-chatthai/  — CS ChatThai (body)
  *
  * After adding files, import this CSS in main.tsx:
- *   import "./fonts/fonts.css";
+ *   import "../fonts/fonts.css";
  * ============================================================ */
 
 /* ── Kanit ── */

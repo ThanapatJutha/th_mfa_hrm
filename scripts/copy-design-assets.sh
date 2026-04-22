@@ -67,9 +67,9 @@ fi
 echo ""
 
 # ── 3. Font folder ───────────────────────────────────────────
-SRC_FONTS="$DL_ROOT/src/fonts"
+SRC_FONTS="$DL_ROOT/figma/fonts"
 if [[ -d "$SRC_FONTS" ]]; then
-  echo "3/3  Copying src/fonts/ ..."
+  echo "3/3  Copying figma/fonts/ → src/fonts/ ..."
   mkdir -p "$PROJECT_ROOT/src/fonts"
   rsync -av --delete "$SRC_FONTS/" "$PROJECT_ROOT/src/fonts/"
   echo "     ✅ src/fonts/"

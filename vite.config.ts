@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@figma": path.resolve(__dirname, "./figma"),
     },
   },
 });
