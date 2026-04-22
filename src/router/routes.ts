@@ -6,6 +6,18 @@ export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   SHOWCASE: "/showcase",
+
+  // Showcase sub-pages
+  SHOWCASE_BUTTON: "/showcase/button",
+  SHOWCASE_INPUT: "/showcase/input",
+  SHOWCASE_TEXTAREA: "/showcase/textarea",
+  SHOWCASE_CHECKBOX: "/showcase/checkbox",
+  SHOWCASE_ALERT: "/showcase/alert",
+  SHOWCASE_AVATAR: "/showcase/avatar",
+  SHOWCASE_EMPTY: "/showcase/empty",
+  SHOWCASE_TABLE: "/showcase/table",
+  SHOWCASE_DROPDOWN: "/showcase/dropdown",
+  SHOWCASE_ICON: "/showcase/icon",
   NOT_FOUND: "*",
 
   // Employee module (admin)
