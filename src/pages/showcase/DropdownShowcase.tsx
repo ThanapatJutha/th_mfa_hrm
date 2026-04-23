@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuLabel,
     DropdownMenuCheckboxItem,
-} from "@figma/components/dropdown-menu";
+} from "@/components/common/dropdown-menu";
 import { Section, Row, PageHeader } from "./helpers";
 
 export function DropdownShowcase() {

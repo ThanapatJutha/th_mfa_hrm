@@ -1,7 +1,7 @@
 import { Bell, Star, Search, Settings, User, Mail, AlertCircle } from "lucide-react";
-import { LucideIcon } from "@figma/components/lucide-icon";
+import { LucideIcon } from "@/components/common/lucide-icon";
 import { Section, Row, PageHeader } from "./helpers";
-import type { IconColor } from "@figma/components/lucide-icon";
+import type { IconColor } from "@/components/common/lucide-icon";
 
 const COLORS: { label: string; color: IconColor }[] = [
     { label: "primary", color: "primary" },

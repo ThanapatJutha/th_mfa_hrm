@@ -7,12 +7,12 @@ export { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbP
 export { Checkbox } from "./checkbox";
 export { Dialog, DialogTrigger, DialogPortal, DialogOverlay, DialogClose, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "./dialog";
 export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup } from "./dropdown-menu";
-export { Dropdown, DropdownTrigger, DropdownSearch, DropdownList, DropdownOption } from "./dropdown";
-export { Empty } from "./empty";
+export { Dropdown, DropdownInput, DropdownContent, DropdownList, DropdownItem, DropdownGroup, DropdownLabel, DropdownCollection, DropdownEmpty, DropdownSeparator, DropdownChips, DropdownChip, DropdownChipsInput, DropdownTrigger, DropdownValue, useDropdownAnchor } from "./dropdown";
+export { Empty, emptyVariants, EmptyMedia, EmptyTitle, EmptyDescription, EmptyActions } from "./empty";
 export { Icon } from "./icon";
-export { InputGroup, InputGroupLeadingIcon, InputGroupTrailingIcon, InputGroupInlineAddon, InputGroupLeadingAddon, InputGroupTrailingAddon } from "./input-group";
+export { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea } from "./input-group";
 export { Input } from "./input";
-export { Item, ItemLeadingIcon, ItemTrailingIcon, ItemLeadingAvatar, ItemGroup } from "./item";
+export { Item, ItemMedia, ItemContent, ItemActions, ItemGroup, ItemSeparator, ItemTitle, ItemDescription, ItemHeader, ItemFooter } from "./item";
 export { LucideIcon } from "./lucide-icon";
 export { Separator } from "./separator";
 export { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from "./table";

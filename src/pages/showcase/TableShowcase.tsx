@@ -1,7 +1,7 @@
 import {
     Table, TableHeader, TableBody, TableFooter,
     TableRow, TableHead, TableCell, TableCaption,
-} from "@figma/components/table";
+} from "@/components/common/table";
 import { Section, PageHeader } from "./helpers";
 
 const EMPLOYEES = [
@@ -39,8 +39,8 @@ export function TableShowcase() {
                                 <TableCell>
                                     <span
                                         className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${row.status === "ปฏิบัติงาน"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-muted text-muted-foreground"
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-muted text-muted-foreground"
                                             }`}
                                     >
                                         {row.status}

@@ -1,6 +1,6 @@
 import { Bell, Star, User } from "lucide-react";
 import { Button } from "@/components/common";
-import { Empty, EmptyMedia, EmptyTitle, EmptyDescription, EmptyActions } from "@figma/components/empty";
+import { Empty, EmptyMedia, EmptyTitle, EmptyDescription, EmptyActions } from "@/components/common/empty";
 import { Section, Row, PageHeader } from "./helpers";
 
 export function EmptyShowcase() {

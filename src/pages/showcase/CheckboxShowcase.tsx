@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Checkbox } from "@figma/components/checkbox";
+import { Checkbox } from "@/components/common/checkbox";
 import { Section, Row, PageHeader } from "./helpers";
 
 export function CheckboxShowcase() {

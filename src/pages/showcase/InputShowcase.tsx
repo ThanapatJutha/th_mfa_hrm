@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import { Input } from "@figma/components/input";
+import { Input } from "@/components/common/input";
 import { Section, Row, PageHeader } from "./helpers";
 
 export function InputShowcase() {

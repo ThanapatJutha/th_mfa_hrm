@@ -1,4 +1,4 @@
-import { Textarea } from "@figma/components/textarea";
+import { Textarea } from "@/components/common/textarea";
 import { Section, Row, PageHeader } from "./helpers";
 
 export function TextareaShowcase() {
