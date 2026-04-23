@@ -7,6 +7,7 @@ import type { Employee } from "@/features/employees/types/employee.types";
 import { Button, buttonVariants } from "@/components/common/button";
 import { Input } from "@/components/common/input";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/common/table";
+import { Avatar, AvatarFallback } from "@/components/common/avatar";
 
 const STATUS_LABEL: Record<Employee["status"], string> = {
     active: "ปฏิบัติงาน",
@@ -84,12 +85,19 @@ export function EmployeeListPage() {
                                 <TableRow key={emp.id}>
                                     <TableCell className="font-mono text-xs text-muted-foreground">{emp.code}</TableCell>
                                     <TableCell>
-                                        <Link
-                                            to={ROUTES.EMPLOYEE_DETAIL(emp.id)}
-                                            className="font-medium text-foreground hover:text-primary transition-colors"
-                                        >
-                                            {emp.firstName} {emp.lastName}
-                                        </Link>
+                                        <div className="flex items-center gap-2.5">
+                                            <Avatar size="sm">
+                                                <AvatarFallback>
+                                                    {emp.firstName[0]}{emp.lastName[0]}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <Link
+                                                to={ROUTES.EMPLOYEE_DETAIL(emp.id)}
+                                                className="font-medium text-foreground hover:text-primary transition-colors"
+                                            >
+                                                {emp.firstName} {emp.lastName}
+                                            </Link>
+                                        </div>
                                     </TableCell>
                                     <TableCell className="text-muted-foreground">{emp.department}</TableCell>
                                     <TableCell className="text-muted-foreground">{emp.position}</TableCell>

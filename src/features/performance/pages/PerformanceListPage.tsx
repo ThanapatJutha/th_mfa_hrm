@@ -5,6 +5,7 @@ import { ROUTES } from "@/router/routes";
 import type { EvaluationGrade } from "@/features/performance/types/performance.types";
 import { buttonVariants } from "@/components/common/button";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/common/table";
+import { Avatar, AvatarFallback } from "@/components/common/avatar";
 
 const GRADE_COLOR: Record<EvaluationGrade, string> = {
     A: "bg-green-100 text-green-700",
@@ -38,6 +39,11 @@ export function PerformanceListPage({ selfView = false }: PerformanceListPagePro
     const sortedEvals = [...filtered].sort(
         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
+
+    function getEmployeeInitials(employeeId: string) {
+        const emp = employees.find((e) => e.id === employeeId);
+        return emp ? `${emp.firstName[0]}${emp.lastName[0]}` : "??";
+    }
 
     function getEmployeeName(employeeId: string) {
         const emp = employees.find((e) => e.id === employeeId);
@@ -90,12 +96,19 @@ export function PerformanceListPage({ selfView = false }: PerformanceListPagePro
                                 <TableRow key={ev.id}>
                                     {!selfView && (
                                         <TableCell className="font-medium text-foreground">
-                                            <Link
-                                                to={ROUTES.EMPLOYEE_DETAIL(ev.employeeId)}
-                                                className="hover:text-primary transition-colors"
-                                            >
-                                                {getEmployeeName(ev.employeeId)}
-                                            </Link>
+                                            <div className="flex items-center gap-2.5">
+                                                <Avatar size="sm">
+                                                    <AvatarFallback>
+                                                        {getEmployeeInitials(ev.employeeId)}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <Link
+                                                    to={ROUTES.EMPLOYEE_DETAIL(ev.employeeId)}
+                                                    className="hover:text-primary transition-colors"
+                                                >
+                                                    {getEmployeeName(ev.employeeId)}
+                                                </Link>
+                                            </div>
                                         </TableCell>
                                     )}
                                     <TableCell className="text-muted-foreground">{ev.year}</TableCell>

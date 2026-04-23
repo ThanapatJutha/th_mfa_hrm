@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { logout } from "@/features/auth/store/authSlice";
 import { ROUTES } from "@/router/routes";
+import { Avatar, AvatarFallback } from "@/components/common/avatar";
 
 const adminNavItems = [
     { label: "ข้อมูลพนักงาน", icon: Users, to: ROUTES.EMPLOYEES },
@@ -67,11 +68,18 @@ export function AppLayout() {
                 {/* Footer: user + logout */}
                 <div className="px-4 py-4 border-t border-sidebar-border space-y-2">
                     {user && (
-                        <div className="px-1">
-                            <p className="text-xs font-medium text-sidebar-foreground truncate">{user.name}</p>
-                            <p className="text-xs text-muted-foreground">
-                                {user.role === "admin" ? "ผู้ดูแลระบบ" : "พนักงาน"}
-                            </p>
+                        <div className="flex items-center gap-3 px-1">
+                            <Avatar size="sm" badge>
+                                <AvatarFallback>
+                                    {user.name.slice(0, 2).toUpperCase()}
+                                </AvatarFallback>
+                            </Avatar>
+                            <div className="min-w-0">
+                                <p className="text-xs font-medium text-sidebar-foreground truncate">{user.name}</p>
+                                <p className="text-xs text-muted-foreground">
+                                    {user.role === "admin" ? "ผู้ดูแลระบบ" : "พนักงาน"}
+                                </p>
+                            </div>
                         </div>
                     )}
                     <button
