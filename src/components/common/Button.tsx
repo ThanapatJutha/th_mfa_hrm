@@ -1,90 +1,67 @@
-/**
- * Button — MFA Design System
- *
- * Wraps the shadcn Button (src/components/ui/button.tsx), which uses
- * @base-ui/react for accessible behaviour (focus, disabled, keyboard).
- *
- * Extends it with the full MFA Figma variant set (node 157:3172),
- * wired directly to the CSS variables from generate-theme.mjs.
- *
- * Variants : primary | secondary | tertiary | destructive |
- *            destructive-outline | link | destructive-link
- * Sizes    : sm (32px) | default (36px) | lg (40px) | icon (36×36px)
- * Radius   : 6px for all, 8px for icon — per Figma spec.
- * Disabled : delegated to shadcn's `disabled:opacity-50 disabled:pointer-events-none`.
- */
+import { Button as ButtonPrimitive } from "@base-ui/react/button"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import type { ComponentProps } from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { Button as BaseButton } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-// MFA visual layer on top of shadcn's structural/accessible base.
-// twMerge ensures these classes win over the base "ghost" variant.
-const mfaButtonVariants = cva("font-body font-medium", {
+const buttonVariants = cva(
+  "group/button inline-flex shrink-0 items-center justify-center rounded-sm border border-transparent bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:bg-disabled disabled:text-disabled-foreground disabled:border-transparent aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  {
     variants: {
-        variant: {
-            primary: [
-                "bg-primary text-primary-foreground border-transparent",
-                "hover:bg-primary-hovered active:bg-primary-pressed",
-            ],
-            secondary: [
-                "bg-secondary text-foreground border border-border",
-                "hover:bg-secondary-hovered active:bg-secondary-pressed",
-            ],
-            tertiary: [
-                "bg-transparent text-foreground border-transparent",
-                "hover:bg-secondary active:bg-secondary-hovered",
-            ],
-            destructive: [
-                "bg-destructive text-destructive-foreground border-transparent",
-                "hover:bg-destructive-hovered active:bg-destructive-pressed",
-            ],
-            "destructive-outline": [
-                "bg-destructive-subtle text-destructive border border-border-destructive",
-                "hover:bg-destructive-subtle-hovered active:bg-destructive-subtle-pressed",
-            ],
-            link: [
-                "bg-transparent text-link border-transparent underline underline-offset-2",
-                "hover:text-link-hovered active:text-link-pressed",
-            ],
-            "destructive-link": [
-                "bg-transparent text-destructive border-transparent underline underline-offset-2",
-                "hover:text-destructive-hovered active:text-destructive-pressed",
-            ],
-        },
-        size: {
-            sm: "h-8 px-3 rounded-[6px] text-sm",
-            default: "h-9 px-4 rounded-[6px] text-sm",
-            lg: "h-10 px-5 rounded-[6px] text-sm",
-            icon: "h-9 w-9 p-0 rounded-[8px] text-sm",
-        },
+      variant: {
+        default:
+          "bg-primary text-primary-foreground hover:bg-primary-hovered active:bg-primary-pressed",
+        primary:
+          "bg-primary text-primary-foreground hover:bg-primary-hovered active:bg-primary-pressed",
+        outline:
+          "bg-background text-muted-foreground border-border hover:bg-secondary",
+        secondary:
+          "bg-background text-muted-foreground border-border hover:bg-secondary",
+        ghost:
+          "text-muted-foreground hover:bg-secondary",
+        tertiary:
+          "text-muted-foreground hover:bg-secondary",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive-hovered active:bg-destructive-pressed",
+        "destructive-outline":
+          "bg-destructive-subtle text-destructive border-border-destructive hover:bg-destructive-subtle-hovered active:bg-destructive-subtle-pressed",
+        link: "text-link px-0! underline-offset-4 hover:underline hover:text-link-hovered active:text-link-pressed",
+        "destructive-link":
+          "text-destructive px-0! underline-offset-4 hover:underline hover:text-destructive-hovered active:text-destructive-pressed",
+      },
+      size: {
+        default:
+          "h-9 gap-2 px-3 text-[20px] leading-[24px] font-bold has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        xs: "h-6 gap-1 px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-8 gap-2 px-3 text-[16px] leading-[20px] font-normal has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "h-10 gap-2 px-4 text-[24px] leading-[30px] font-bold has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        icon: "size-9",
+        "icon-xs":
+          "size-6 in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm":
+          "size-7",
+        "icon-lg": "size-10",
+      },
     },
     defaultVariants: {
-        variant: "primary",
-        size: "default",
+      variant: "primary",
+      size: "default",
     },
-});
+  }
+)
 
-export type ButtonVariant = NonNullable<VariantProps<typeof mfaButtonVariants>["variant"]>;
-export type ButtonSize = NonNullable<VariantProps<typeof mfaButtonVariants>["size"]>;
-
-export interface ButtonProps
-    extends Omit<ComponentProps<typeof BaseButton>, "variant" | "size">,
-    VariantProps<typeof mfaButtonVariants> { }
-
-function Button({ className, variant, size, ...props }: ButtonProps) {
-    return (
-        <BaseButton
-            // "ghost" provides the minimal structural base (accessible primitive,
-            // focus ring, disabled handling) without visual colour opinions.
-            variant="ghost"
-            size={size === "icon" ? "icon" : "default"}
-            data-mfa-variant={variant}
-            className={cn(mfaButtonVariants({ variant, size }), className)}
-            {...props}
-        />
-    );
+function Button({
+  className,
+  variant = "default",
+  size = "default",
+  ...props
+}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  return (
+    <ButtonPrimitive
+      data-slot="button"
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
+    />
+  )
 }
 
-export { Button, mfaButtonVariants as buttonVariants };
+export { Button, buttonVariants }

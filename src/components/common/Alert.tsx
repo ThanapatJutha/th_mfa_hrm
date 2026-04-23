@@ -1,103 +1,87 @@
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
 /**
  * Alert — MFA Design System
  *
- * Wraps the shadcn Alert (src/components/ui/alert.tsx) and overrides
- * the variant styles to match the Figma spec (node 142:177), using
- * the CSS variables from generate-theme.mjs.
+ * Figma source: node 142:177
+ *
+ * Variants: default | destructive
  *
  * Token mapping:
- *   default     → bg-background  border-input             text-foreground
- *   destructive → bg-destructive-subtle  border-border-destructive  text-destructive
+ *   default:     bg --background, border --input, title --foreground, desc --muted-foreground, icon --icon-primary
+ *   destructive: bg --destructive-subtle, border --border-destructive, title/desc/icon --destructive
  *
- * Compound API (same as shadcn, plus AlertIcon and AlertContent):
- *   <Alert variant="destructive">
- *     <AlertIcon><AlertCircle /></AlertIcon>
- *     <AlertContent>
- *       <AlertTitle>Title</AlertTitle>
- *       <AlertDescription>Body</AlertDescription>
- *     </AlertContent>
- *     <AlertAction><Button size="sm">Retry</Button></AlertAction>
- *   </Alert>
- *
- * AlertTitle, AlertDescription, AlertAction are re-exported directly
- * from shadcn (they already use the correct data-slot attributes).
+ * Layout: p-4, icon gap-x-4, rounded-lg (8px), action button absolute top-4 right-4
  */
 
-import type { ComponentProps } from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import {
-    Alert as BaseAlert,
-    AlertTitle,
-    AlertDescription,
-    AlertAction,
-} from "@/components/ui/alert";
-import { cn } from "@/lib/utils";
+const alertVariants = cva(
+  "relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:size-4 [&>svg+div]:translate-y-[-3px] [&:has(svg)]:pl-12",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-background border-input text-foreground [&>svg]:text-icon-primary",
+        destructive:
+          "bg-destructive-subtle border-border-destructive text-destructive [&>svg]:text-destructive",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
 
-// ── Variant override ─────────────────────────────────────────
-// We switch from shadcn's grid layout to flex so our AlertIcon slot
-// (a <span> wrapper) works without requiring direct SVG children.
-
-const mfaAlertVariants = cva(
-    "flex gap-4 items-start",
-    {
-        variants: {
-            variant: {
-                default: "bg-background border-input text-foreground",
-                destructive:
-                    "bg-destructive-subtle border-border-destructive text-destructive",
-            },
-        },
-        defaultVariants: {
-            variant: "default",
-        },
-    }
-);
-
-// ── Alert container ──────────────────────────────────────────
-
-export interface AlertProps
-    extends Omit<ComponentProps<typeof BaseAlert>, "variant">,
-    VariantProps<typeof mfaAlertVariants> { }
-
-function Alert({ className, variant, ...props }: AlertProps) {
-    return (
-        <BaseAlert
-            // Pass "default" to shadcn so it doesn't inject destructive colour
-            // classes; our mfaAlertVariants className fully owns presentation.
-            variant="default"
-            className={cn(mfaAlertVariants({ variant }), className)}
-            {...props}
-        />
-    );
+function Alert({
+  className,
+  variant,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
+  return (
+    <div
+      data-slot="alert"
+      data-variant={variant}
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...props}
+    />
+  )
 }
 
-// ── Icon slot ────────────────────────────────────────────────
-// Normalises icon sizing and top-aligns it with the first line of text.
-
-function AlertIcon({ className, ...props }: ComponentProps<"span">) {
-    return (
-        <span
-            className={cn("mt-0.5 shrink-0 [&>svg]:h-4 [&>svg]:w-4 [&>svg]:text-current", className)}
-            {...props}
-        />
-    );
+function AlertTitle({ className, ...props }: React.ComponentProps<"h5">) {
+  return (
+    <h5
+      data-slot="alert-title"
+      className={cn("text-body-accent-3 leading-none tracking-tight", className)}
+      {...props}
+    />
+  )
 }
 
-// ── Content wrapper ──────────────────────────────────────────
-
-function AlertContent({ className, ...props }: ComponentProps<"div">) {
-    return (
-        <div className={cn("flex min-w-0 flex-1 flex-col gap-0.5", className)} {...props} />
-    );
+function AlertDescription({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="alert-description"
+      className={cn(
+        "mt-1 text-sm [&_p]:leading-relaxed",
+        "group-data-[variant=default]/alert:text-muted-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
 }
 
-// Re-export shadcn sub-components unchanged — they already carry the
-// correct data-slot props and base typography styles.
-export {
-    Alert,
-    AlertIcon,
-    AlertContent,
-    AlertTitle,
-    AlertDescription,
-    AlertAction,
-};
+function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="alert-action"
+      className={cn("absolute top-4 right-4", className)}
+      {...props}
+    />
+  )
+}
+
+export { Alert, AlertTitle, AlertDescription, AlertAction, alertVariants }

@@ -1,134 +1,151 @@
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
 /**
  * Avatar — MFA Design System
  *
- * Wraps the shadcn Avatar (src/components/ui/avatar.tsx), which uses
- * @base-ui/react/avatar for native image-load-state management
- * (no useState needed, browser-handled).
+ * Figma source: node 139:15
  *
- * Figma spec overrides (node 139:15):
- *   Sizes     sm=32px | default=40px | lg=56px
- *             (shadcn defaults: sm=24px / default=32px / lg=40px)
- *   Fallback  bg-secondary (#f5f6f7), text-foreground (#242526)
- *             (shadcn uses bg-muted + text-muted-foreground)
- *   Badge     bg-success (#00a587) — online indicator
- *             (shadcn AvatarBadge uses bg-primary)
+ * Sizes: sm (32px) | default (40px) | lg (56px)
+ * States: image | fallback (initials)
+ * Badge: green status indicator (render <AvatarBadge /> or use badge prop)
  *
- * Usage:
- *   <Avatar size="lg" badge>
- *     <AvatarImage src="..." alt="..." />
- *     <AvatarFallback>CN</AvatarFallback>
- *   </Avatar>
- *
- * Also re-exports AvatarGroup / AvatarGroupCount from shadcn unchanged.
+ * Token mapping:
+ *   Fallback bg: --secondary (#f5f6f7)
+ *   Fallback text: --foreground (#242526)
+ *   Badge fill: --success (#00a587)
+ *   Badge border: --background (#ffffff)
  */
 
-import type { ComponentProps } from "react";
-import {
-    Avatar as BaseAvatar,
-    AvatarImage as BaseAvatarImage,
-    AvatarFallback as BaseAvatarFallback,
-    AvatarBadge as BaseAvatarBadge,
-    AvatarGroup,
-    AvatarGroupCount,
-} from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
+const avatarVariants = cva(
+  "relative inline-flex shrink-0",
+  {
+    variants: {
+      size: {
+        sm: "size-8",
+        default: "size-10",
+        lg: "size-14",
+      },
+    },
+    defaultVariants: {
+      size: "default",
+    },
+  }
+)
 
-// ── Size map: Figma values via data-size attribute ────────────
-// We keep shadcn's data-[size=*] convention but override the pixel values.
-
-const sizeClass = {
-    sm: "size-8",      // 32px — Figma sm
-    default: "size-10", // 40px — Figma default
-    lg: "size-14",     // 56px — Figma lg
-} as const;
-
-type AvatarSize = keyof typeof sizeClass;
-
-const fallbackTextClass: Record<AvatarSize, string> = {
-    sm: "text-[12.8px]",
-    default: "text-base",
-    lg: "text-[22.4px]",
-};
-
-// ── Avatar container ─────────────────────────────────────────
-
-export interface AvatarProps extends Omit<ComponentProps<typeof BaseAvatar>, "size"> {
-    size?: AvatarSize;
-    badge?: boolean;
+const badgeSizeMap: Record<"sm" | "default" | "lg", string> = {
+  sm: "size-2.5",
+  default: "size-3",
+  lg: "size-3.5",
 }
 
-function Avatar({ size = "default", badge = false, className, children, ...props }: AvatarProps) {
-    return (
-        <BaseAvatar
-            // Pass size so shadcn's group-data-[size=*] selectors still work
-            // (e.g. AvatarGroupCount sizing), but our explicit sizeClass wins visually.
-            size={size}
-            className={cn(sizeClass[size], "after:hidden", className)}
-            {...props}
-        >
-            {children}
-            {badge && (
-                <AvatarBadge className={cn(
-                    size === "sm" && "size-2",
-                    size === "default" && "size-2.5",
-                    size === "lg" && "size-3.5",
-                )} />
-            )}
-        </BaseAvatar>
-    );
-}
-
-// ── Image ────────────────────────────────────────────────────
-// Delegates load/error state to @base-ui/react/avatar natively.
-
-export interface AvatarImageProps extends ComponentProps<typeof BaseAvatarImage> { }
-
-function AvatarImage({ className, ...props }: AvatarImageProps) {
-    return (
-        <BaseAvatarImage
-            className={cn("aspect-square size-full rounded-full object-cover", className)}
-            {...props}
+function Avatar({
+  className,
+  size = "default",
+  badge = false,
+  children,
+  ...props
+}: React.ComponentProps<"div"> &
+  VariantProps<typeof avatarVariants> & { badge?: boolean }) {
+  return (
+    <div
+      data-slot="avatar"
+      data-size={size}
+      className={cn(avatarVariants({ size }), className)}
+      {...props}
+    >
+      {children}
+      {badge && (
+        <AvatarBadge
+          className={cn(badgeSizeMap[size as "sm" | "default" | "lg"])}
         />
-    );
+      )}
+    </div>
+  )
 }
 
-// ── Fallback ─────────────────────────────────────────────────
-// bg-secondary + text-foreground to match Figma token spec.
-
-export interface AvatarFallbackProps extends ComponentProps<typeof BaseAvatarFallback> {
-    size?: AvatarSize;
+function AvatarImage({
+  className,
+  ...props
+}: React.ComponentProps<"img">) {
+  return (
+    <img
+      data-slot="avatar-image"
+      className={cn("aspect-square size-full rounded-full object-cover", className)}
+      {...props}
+    />
+  )
 }
 
-function AvatarFallback({ size = "default", className, ...props }: AvatarFallbackProps) {
-    return (
-        <BaseAvatarFallback
-            className={cn(
-                "bg-secondary text-foreground font-semibold",
-                fallbackTextClass[size],
-                className
-            )}
-            {...props}
-        />
-    );
+function AvatarFallback({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="avatar-fallback"
+      className={cn(
+        "flex size-full items-center justify-center rounded-full bg-secondary text-foreground font-semibold",
+        className
+      )}
+      {...props}
+    />
+  )
 }
 
-// ── Badge ────────────────────────────────────────────────────
-// Uses bg-success (green) per Figma spec instead of shadcn's bg-primary.
+function AvatarBadge({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="avatar-badge"
+      className={cn(
+        "absolute bottom-0 right-0 rounded-full border-2 border-background bg-success",
+        className
+      )}
+      {...props}
+    />
+  )
+}
 
-function AvatarBadge({ className, ...props }: ComponentProps<typeof BaseAvatarBadge>) {
-    return (
-        <BaseAvatarBadge
-            className={cn("bg-success", className)}
-            {...props}
-        />
-    );
+function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="avatar-group"
+      className={cn(
+        "flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function AvatarGroupCount({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="avatar-group-count"
+      className={cn(
+        "relative flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary text-sm text-foreground ring-2 ring-background",
+        className
+      )}
+      {...props}
+    />
+  )
 }
 
 export {
-    Avatar,
-    AvatarImage,
-    AvatarFallback,
-    AvatarBadge,
-    AvatarGroup,
-    AvatarGroupCount,
-};
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  AvatarBadge,
+  AvatarGroup,
+  AvatarGroupCount,
+  avatarVariants,
+}
