@@ -3,6 +3,8 @@ import { ArrowLeft, Pencil } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
 import { ROUTES } from "@/router/routes";
 import type { EvaluationGrade } from "@/features/performance/types/performance.types";
+import { buttonVariants } from "@/components/common/button";
+import { cn } from "@/lib/utils";
 
 const GRADE_COLOR: Record<EvaluationGrade, string> = {
     A: "bg-green-100 text-green-700",
@@ -64,7 +66,7 @@ export function EvaluationDetailPage() {
                 {userRole === "admin" && (
                     <Link
                         to={ROUTES.PERFORMANCE_EDIT(evaluation.id)}
-                        className="inline-flex items-center gap-1.5 border border-border text-sm px-3 py-1.5 rounded-radius-md hover:bg-accent transition-colors"
+                        className={cn(buttonVariants({ variant: "outline", size: "sm" }), "gap-1.5")}
                     >
                         <Pencil size={14} />
                         แก้ไข

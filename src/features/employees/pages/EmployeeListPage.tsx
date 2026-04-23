@@ -4,6 +4,9 @@ import { Plus, Search } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
 import { ROUTES } from "@/router/routes";
 import type { Employee } from "@/features/employees/types/employee.types";
+import { Button, buttonVariants } from "@/components/common/button";
+import { Input } from "@/components/common/input";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/common/table";
 
 const STATUS_LABEL: Record<Employee["status"], string> = {
     active: "ปฏิบัติงาน",
@@ -37,10 +40,7 @@ export function EmployeeListPage() {
                     </p>
                 </div>
                 {userRole === "admin" && (
-                    <Link
-                        to={ROUTES.EMPLOYEES_NEW}
-                        className="inline-flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-2 rounded-radius-md hover:opacity-90 transition-opacity"
-                    >
+                    <Link to={ROUTES.EMPLOYEES_NEW} className={buttonVariants()}>
                         <Plus size={16} />
                         เพิ่มพนักงาน
                     </Link>
@@ -49,68 +49,68 @@ export function EmployeeListPage() {
 
             {/* Search */}
             <div className="relative max-w-sm">
-                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                <input
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                <Input
                     type="text"
                     placeholder="ค้นหาชื่อ รหัส หน่วยงาน..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 text-sm border border-input rounded-radius-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="pl-9"
                 />
             </div>
 
             {/* Table */}
             <div className="border border-border rounded-radius-lg overflow-hidden">
-                <table className="w-full text-sm">
-                    <thead className="bg-muted/50 text-muted-foreground">
-                        <tr>
-                            <th className="px-4 py-3 text-left font-medium">รหัส</th>
-                            <th className="px-4 py-3 text-left font-medium">ชื่อ-สกุล</th>
-                            <th className="px-4 py-3 text-left font-medium">หน่วยงาน</th>
-                            <th className="px-4 py-3 text-left font-medium">ตำแหน่ง</th>
-                            <th className="px-4 py-3 text-left font-medium">สถานะ</th>
-                            <th className="px-4 py-3 text-left font-medium">วันเริ่มงาน</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>รหัส</TableHead>
+                            <TableHead>ชื่อ-สกุล</TableHead>
+                            <TableHead>หน่วยงาน</TableHead>
+                            <TableHead>ตำแหน่ง</TableHead>
+                            <TableHead>สถานะ</TableHead>
+                            <TableHead>วันเริ่มงาน</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
                         {filtered.length === 0 ? (
-                            <tr>
-                                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                            <TableRow>
+                                <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
                                     ไม่พบข้อมูลพนักงาน
-                                </td>
-                            </tr>
+                                </TableCell>
+                            </TableRow>
                         ) : (
                             filtered.map((emp) => (
-                                <tr key={emp.id} className="hover:bg-muted/30 transition-colors">
-                                    <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{emp.code}</td>
-                                    <td className="px-4 py-3">
+                                <TableRow key={emp.id}>
+                                    <TableCell className="font-mono text-xs text-muted-foreground">{emp.code}</TableCell>
+                                    <TableCell>
                                         <Link
                                             to={ROUTES.EMPLOYEE_DETAIL(emp.id)}
                                             className="font-medium text-foreground hover:text-primary transition-colors"
                                         >
                                             {emp.firstName} {emp.lastName}
                                         </Link>
-                                    </td>
-                                    <td className="px-4 py-3 text-muted-foreground">{emp.department}</td>
-                                    <td className="px-4 py-3 text-muted-foreground">{emp.position}</td>
-                                    <td className="px-4 py-3">
+                                    </TableCell>
+                                    <TableCell className="text-muted-foreground">{emp.department}</TableCell>
+                                    <TableCell className="text-muted-foreground">{emp.position}</TableCell>
+                                    <TableCell>
                                         <span
                                             className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${emp.status === "active"
-                                                    ? "bg-green-100 text-green-700"
-                                                    : "bg-muted text-muted-foreground"
+                                                ? "bg-green-100 text-green-700"
+                                                : "bg-muted text-muted-foreground"
                                                 }`}
                                         >
                                             {STATUS_LABEL[emp.status]}
                                         </span>
-                                    </td>
-                                    <td className="px-4 py-3 text-muted-foreground">
+                                    </TableCell>
+                                    <TableCell className="text-muted-foreground">
                                         {new Date(emp.startDate).toLocaleDateString("th-TH")}
-                                    </td>
-                                </tr>
+                                    </TableCell>
+                                </TableRow>
                             ))
                         )}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </Table>
             </div>
         </div>
     );

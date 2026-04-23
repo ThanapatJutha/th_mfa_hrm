@@ -5,6 +5,9 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addEmployee, updateEmployee } from "@/features/employees/store/employeesSlice";
 import { ROUTES } from "@/router/routes";
 import type { Employee, EmployeeStatus } from "@/features/employees/types/employee.types";
+import { Button, buttonVariants } from "@/components/common/button";
+import { Input } from "@/components/common/input";
+import { cn } from "@/lib/utils";
 
 const DEPARTMENTS = [
     "สำนักงานเลขานุการกรม",
@@ -99,8 +102,8 @@ export function EmployeeFormPage() {
         <label className="block text-sm font-medium text-foreground mb-1">{children}</label>
     );
 
-    const inputClass =
-        "w-full text-sm border border-input rounded-radius-md px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring";
+    const selectClass =
+        "w-full text-sm border border-input rounded-radius-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
     return (
         <div className="space-y-6 max-w-xl">
@@ -123,18 +126,16 @@ export function EmployeeFormPage() {
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <Label>ชื่อ</Label>
-                        <input
+                        <Input
                             required
-                            className={inputClass}
                             value={form.firstName}
                             onChange={(e) => set("firstName", e.target.value)}
                         />
                     </div>
                     <div>
                         <Label>นามสกุล</Label>
-                        <input
+                        <Input
                             required
-                            className={inputClass}
                             value={form.lastName}
                             onChange={(e) => set("lastName", e.target.value)}
                         />
@@ -144,18 +145,16 @@ export function EmployeeFormPage() {
                 {/* Contact */}
                 <div>
                     <Label>อีเมล</Label>
-                    <input
+                    <Input
                         type="email"
                         required
-                        className={inputClass}
                         value={form.email}
                         onChange={(e) => set("email", e.target.value)}
                     />
                 </div>
                 <div>
                     <Label>เบอร์โทรศัพท์</Label>
-                    <input
-                        className={inputClass}
+                    <Input
                         value={form.phone}
                         onChange={(e) => set("phone", e.target.value)}
                     />
@@ -165,7 +164,7 @@ export function EmployeeFormPage() {
                 <div>
                     <Label>หน่วยงาน</Label>
                     <select
-                        className={inputClass}
+                        className={selectClass}
                         value={form.department}
                         onChange={(e) => set("department", e.target.value)}
                     >
@@ -176,19 +175,17 @@ export function EmployeeFormPage() {
                 </div>
                 <div>
                     <Label>ตำแหน่ง</Label>
-                    <input
+                    <Input
                         required
-                        className={inputClass}
                         value={form.position}
                         onChange={(e) => set("position", e.target.value)}
                     />
                 </div>
                 <div>
                     <Label>วันเริ่มงาน</Label>
-                    <input
+                    <Input
                         type="date"
                         required
-                        className={inputClass}
                         value={form.startDate}
                         onChange={(e) => set("startDate", e.target.value)}
                     />
@@ -196,7 +193,7 @@ export function EmployeeFormPage() {
                 <div>
                     <Label>สถานะ</Label>
                     <select
-                        className={inputClass}
+                        className={selectClass}
                         value={form.status}
                         onChange={(e) => set("status", e.target.value as EmployeeStatus)}
                     >
@@ -209,16 +206,13 @@ export function EmployeeFormPage() {
                 <div className="flex justify-end gap-3 pt-2">
                     <Link
                         to={isEdit && id ? ROUTES.EMPLOYEE_DETAIL(id) : ROUTES.EMPLOYEES}
-                        className="text-sm px-4 py-2 border border-border rounded-radius-md hover:bg-accent transition-colors"
+                        className={buttonVariants({ variant: "outline" })}
                     >
                         ยกเลิก
                     </Link>
-                    <button
-                        type="submit"
-                        className="text-sm px-4 py-2 bg-primary text-primary-foreground rounded-radius-md hover:opacity-90 transition-opacity"
-                    >
+                    <Button type="submit">
                         {isEdit ? "บันทึกการแก้ไข" : "เพิ่มพนักงาน"}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

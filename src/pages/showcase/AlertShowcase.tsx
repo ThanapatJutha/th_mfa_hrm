@@ -1,7 +1,6 @@
 import { AlertCircle, Info } from "lucide-react";
 import {
-    Alert, AlertIcon, AlertContent,
-    AlertTitle, AlertDescription, AlertAction,
+    Alert, AlertTitle, AlertDescription, AlertAction,
     Button,
 } from "@/components/common";
 import { Section, PageHeader } from "./helpers";
@@ -14,22 +13,18 @@ export function AlertShowcase() {
             <Section title="Default">
                 <div className="space-y-3 max-w-xl">
                     <Alert variant="default">
-                        <AlertIcon><Info /></AlertIcon>
-                        <AlertContent>
-                            <AlertTitle>Heads up!</AlertTitle>
-                            <AlertDescription>You can add components to your app using the CLI.</AlertDescription>
-                        </AlertContent>
+                        <Info />
+                        <AlertTitle>Heads up!</AlertTitle>
+                        <AlertDescription>You can add components to your app using the CLI.</AlertDescription>
                         <AlertAction>
                             <Button size="sm" variant="secondary">Enable</Button>
                         </AlertAction>
                     </Alert>
 
                     <Alert variant="default">
-                        <AlertIcon><Info /></AlertIcon>
-                        <AlertContent>
-                            <AlertTitle>Information</AlertTitle>
-                            <AlertDescription>This is a default alert without an action button.</AlertDescription>
-                        </AlertContent>
+                        <Info />
+                        <AlertTitle>Information</AlertTitle>
+                        <AlertDescription>This is a default alert without an action button.</AlertDescription>
                     </Alert>
                 </div>
             </Section>
@@ -37,22 +32,18 @@ export function AlertShowcase() {
             <Section title="Destructive">
                 <div className="space-y-3 max-w-xl">
                     <Alert variant="destructive">
-                        <AlertIcon><AlertCircle /></AlertIcon>
-                        <AlertContent>
-                            <AlertTitle>Something went wrong</AlertTitle>
-                            <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
-                        </AlertContent>
+                        <AlertCircle />
+                        <AlertTitle>Something went wrong</AlertTitle>
+                        <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
                         <AlertAction>
                             <Button size="sm" variant="destructive-outline">Retry</Button>
                         </AlertAction>
                     </Alert>
 
                     <Alert variant="destructive">
-                        <AlertIcon><AlertCircle /></AlertIcon>
-                        <AlertContent>
-                            <AlertTitle>Error</AlertTitle>
-                            <AlertDescription>Failed to save changes. Please try again later.</AlertDescription>
-                        </AlertContent>
+                        <AlertCircle />
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>Failed to save changes. Please try again later.</AlertDescription>
                     </Alert>
                 </div>
             </Section>

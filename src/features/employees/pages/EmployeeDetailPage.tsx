@@ -4,6 +4,8 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { deleteEmployee } from "@/features/employees/store/employeesSlice";
 import { ROUTES } from "@/router/routes";
 import type { Employee } from "@/features/employees/types/employee.types";
+import { Button, buttonVariants } from "@/components/common/button";
+import { cn } from "@/lib/utils";
 
 const STATUS_LABEL: Record<Employee["status"], string> = {
     active: "ปฏิบัติงาน",
@@ -71,18 +73,20 @@ export function EmployeeDetailPage({ selfView = false }: EmployeeDetailPageProps
                     <div className="flex gap-2">
                         <Link
                             to={ROUTES.EMPLOYEE_EDIT(employee.id)}
-                            className="inline-flex items-center gap-1.5 border border-border text-sm px-3 py-1.5 rounded-radius-md hover:bg-accent transition-colors"
+                            className={cn(buttonVariants({ variant: "outline", size: "sm" }), "gap-1.5")}
                         >
                             <Pencil size={14} />
                             แก้ไข
                         </Link>
-                        <button
+                        <Button
+                            variant="destructive-outline"
+                            size="sm"
                             onClick={handleDelete}
-                            className="inline-flex items-center gap-1.5 border border-destructive text-destructive text-sm px-3 py-1.5 rounded-radius-md hover:bg-destructive/10 transition-colors"
+                            className="gap-1.5"
                         >
                             <Trash2 size={14} />
                             ลบ
-                        </button>
+                        </Button>
                     </div>
                 )}
             </div>
@@ -120,8 +124,8 @@ export function EmployeeDetailPage({ selfView = false }: EmployeeDetailPageProps
                         <dd>
                             <span
                                 className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${employee.status === "active"
-                                        ? "bg-green-100 text-green-700"
-                                        : "bg-muted text-muted-foreground"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-muted text-muted-foreground"
                                     }`}
                             >
                                 {STATUS_LABEL[employee.status]}

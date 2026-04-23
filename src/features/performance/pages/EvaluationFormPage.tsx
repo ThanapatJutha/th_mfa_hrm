@@ -9,6 +9,9 @@ import type {
     EvaluationGrade,
     EvaluationPeriod,
 } from "@/features/performance/types/performance.types";
+import { Button, buttonVariants } from "@/components/common/button";
+import { Input } from "@/components/common/input";
+import { Textarea } from "@/components/common/textarea";
 
 const PERIODS: EvaluationPeriod[] = ["Q1", "Q2", "Q3", "Q4", "Annual"];
 const PERIOD_LABEL: Record<EvaluationPeriod, string> = {
@@ -106,6 +109,8 @@ export function EvaluationFormPage() {
     const inputClass =
         "w-full text-sm border border-input rounded-radius-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
+    const selectClass = inputClass;
+
     const Label = ({ children }: { children: React.ReactNode }) => (
         <label className="block text-sm font-medium text-foreground mb-1">{children}</label>
     );
@@ -131,7 +136,7 @@ export function EvaluationFormPage() {
                 <div>
                     <Label>พนักงาน</Label>
                     <select
-                        className={inputClass}
+                        className={selectClass}
                         value={form.employeeId}
                         onChange={(e) => set("employeeId", e.target.value)}
                         disabled={isEdit}
@@ -148,12 +153,11 @@ export function EvaluationFormPage() {
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <Label>ปีที่ประเมิน (พ.ศ.)</Label>
-                        <input
+                        <Input
                             type="number"
                             required
                             min={2560}
                             max={2580}
-                            className={inputClass}
                             value={form.year}
                             onChange={(e) => set("year", parseInt(e.target.value, 10))}
                         />
@@ -161,7 +165,7 @@ export function EvaluationFormPage() {
                     <div>
                         <Label>รอบประเมิน</Label>
                         <select
-                            className={inputClass}
+                            className={selectClass}
                             value={form.period}
                             onChange={(e) => set("period", e.target.value as EvaluationPeriod)}
                         >
@@ -184,12 +188,12 @@ export function EvaluationFormPage() {
                             onChange={(e) => set("score", parseInt(e.target.value, 10))}
                             className="flex-1"
                         />
-                        <input
+                        <Input
                             type="number"
                             min={0}
                             max={100}
                             required
-                            className="w-20 text-sm border border-input rounded-radius-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                            className="w-20"
                             value={form.score}
                             onChange={(e) => set("score", Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0)))}
                         />
@@ -199,9 +203,8 @@ export function EvaluationFormPage() {
                 {/* Comment */}
                 <div>
                     <Label>ความเห็นผู้ประเมิน</Label>
-                    <textarea
+                    <Textarea
                         rows={4}
-                        className={inputClass}
                         value={form.comment}
                         onChange={(e) => set("comment", e.target.value)}
                         placeholder="กรอกความเห็นหรือข้อแนะนำ..."
@@ -212,16 +215,13 @@ export function EvaluationFormPage() {
                 <div className="flex justify-end gap-3 pt-2">
                     <Link
                         to={isEdit && id ? ROUTES.PERFORMANCE_DETAIL(id) : ROUTES.PERFORMANCE}
-                        className="text-sm px-4 py-2 border border-border rounded-radius-md hover:bg-accent transition-colors"
+                        className={buttonVariants({ variant: "outline" })}
                     >
                         ยกเลิก
                     </Link>
-                    <button
-                        type="submit"
-                        className="text-sm px-4 py-2 bg-primary text-primary-foreground rounded-radius-md hover:opacity-90 transition-opacity"
-                    >
+                    <Button type="submit">
                         {isEdit ? "บันทึกการแก้ไข" : "เพิ่มการประเมิน"}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

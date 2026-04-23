@@ -3,6 +3,8 @@ import { Plus } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
 import { ROUTES } from "@/router/routes";
 import type { EvaluationGrade } from "@/features/performance/types/performance.types";
+import { buttonVariants } from "@/components/common/button";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/common/table";
 
 const GRADE_COLOR: Record<EvaluationGrade, string> = {
     A: "bg-green-100 text-green-700",
@@ -55,10 +57,7 @@ export function PerformanceListPage({ selfView = false }: PerformanceListPagePro
                     </p>
                 </div>
                 {authUser?.role === "admin" && (
-                    <Link
-                        to={ROUTES.PERFORMANCE_NEW}
-                        className="inline-flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-2 rounded-radius-md hover:opacity-90 transition-opacity"
-                    >
+                    <Link to={ROUTES.PERFORMANCE_NEW} className={buttonVariants()}>
                         <Plus size={16} />
                         เพิ่มการประเมิน
                     </Link>
@@ -67,62 +66,62 @@ export function PerformanceListPage({ selfView = false }: PerformanceListPagePro
 
             {/* List */}
             <div className="border border-border rounded-radius-lg overflow-hidden">
-                <table className="w-full text-sm">
-                    <thead className="bg-muted/50 text-muted-foreground">
-                        <tr>
-                            {!selfView && <th className="px-4 py-3 text-left font-medium">พนักงาน</th>}
-                            <th className="px-4 py-3 text-left font-medium">ปี</th>
-                            <th className="px-4 py-3 text-left font-medium">รอบประเมิน</th>
-                            <th className="px-4 py-3 text-left font-medium">คะแนน</th>
-                            <th className="px-4 py-3 text-left font-medium">เกรด</th>
-                            <th className="px-4 py-3 text-left font-medium">วันที่บันทึก</th>
-                            <th className="px-4 py-3" />
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            {!selfView && <TableHead>พนักงาน</TableHead>}
+                            <TableHead>ปี</TableHead>
+                            <TableHead>รอบประเมิน</TableHead>
+                            <TableHead>คะแนน</TableHead>
+                            <TableHead>เกรด</TableHead>
+                            <TableHead>วันที่บันทึก</TableHead>
+                            <TableHead />
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
                         {sortedEvals.length === 0 ? (
-                            <tr>
-                                <td colSpan={selfView ? 6 : 7} className="px-4 py-8 text-center text-muted-foreground">
+                            <TableRow>
+                                <TableCell colSpan={selfView ? 6 : 7} className="py-8 text-center text-muted-foreground">
                                     ไม่พบข้อมูลการประเมิน
-                                </td>
-                            </tr>
+                                </TableCell>
+                            </TableRow>
                         ) : (
                             sortedEvals.map((ev) => (
-                                <tr key={ev.id} className="hover:bg-muted/30 transition-colors">
+                                <TableRow key={ev.id}>
                                     {!selfView && (
-                                        <td className="px-4 py-3 font-medium text-foreground">
+                                        <TableCell className="font-medium text-foreground">
                                             <Link
                                                 to={ROUTES.EMPLOYEE_DETAIL(ev.employeeId)}
                                                 className="hover:text-primary transition-colors"
                                             >
                                                 {getEmployeeName(ev.employeeId)}
                                             </Link>
-                                        </td>
+                                        </TableCell>
                                     )}
-                                    <td className="px-4 py-3 text-muted-foreground">{ev.year}</td>
-                                    <td className="px-4 py-3 text-muted-foreground">{PERIOD_LABEL[ev.period] ?? ev.period}</td>
-                                    <td className="px-4 py-3 font-medium text-foreground">{ev.score}</td>
-                                    <td className="px-4 py-3">
+                                    <TableCell className="text-muted-foreground">{ev.year}</TableCell>
+                                    <TableCell className="text-muted-foreground">{PERIOD_LABEL[ev.period] ?? ev.period}</TableCell>
+                                    <TableCell className="font-medium text-foreground">{ev.score}</TableCell>
+                                    <TableCell>
                                         <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${GRADE_COLOR[ev.grade]}`}>
                                             {ev.grade}
                                         </span>
-                                    </td>
-                                    <td className="px-4 py-3 text-muted-foreground">
+                                    </TableCell>
+                                    <TableCell className="text-muted-foreground">
                                         {new Date(ev.createdAt).toLocaleDateString("th-TH")}
-                                    </td>
-                                    <td className="px-4 py-3">
+                                    </TableCell>
+                                    <TableCell>
                                         <Link
                                             to={ROUTES.PERFORMANCE_DETAIL(ev.id)}
                                             className="text-xs text-primary hover:underline"
                                         >
                                             ดูรายละเอียด
                                         </Link>
-                                    </td>
-                                </tr>
+                                    </TableCell>
+                                </TableRow>
                             ))
                         )}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </Table>
             </div>
         </div>
     );
